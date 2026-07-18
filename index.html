@@ -22,7 +22,9 @@
 *{box-sizing:border-box;}
 body{
   margin:0;
-  background:var(--navy);
+  background:
+    radial-gradient(rgba(228,201,138,0.10) 1px, transparent 1.4px) 0 0/26px 26px,
+    var(--navy);
   padding:32px 16px 80px;
 }
 .doc{
@@ -57,6 +59,20 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   color:var(--paper);
   padding:30px 28px 26px;
   position:relative;
+  overflow:hidden;
+}
+.cover-art{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+.cover .eyebrow,
+.cover .dest-input,
+.cover .tagline,
+.cover .chips{
+  position:relative;
+  z-index:1;
 }
 .cover .eyebrow{
   font-family:'Space Mono',monospace;
@@ -78,6 +94,57 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   color:#B9C0D4;
   font-style:italic;
 }
+.visa-stamp{
+  position:absolute;
+  top:26px;right:26px;
+  width:68px;height:68px;
+  border:1.5px dashed rgba(228,201,138,0.55);
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transform:rotate(-10deg);
+  z-index:1;
+  color:var(--gold-soft);
+  font-family:'Space Mono',monospace;
+  text-align:center;
+  line-height:1.25;
+}
+.visa-stamp .top{font-size:7px;letter-spacing:.12em;opacity:.85;}
+.visa-stamp .mid{font-size:13px;font-weight:700;margin:1px 0;}
+.visa-stamp .bot{font-size:6.5px;letter-spacing:.1em;opacity:.75;}
+.cover .flourish{
+  font-size:10px;
+  letter-spacing:.15em;
+  color:var(--gold);
+  opacity:.6;
+  margin-bottom:6px;
+}
+.cover-photo{
+  position:absolute;inset:0;z-index:0;
+  display:none;
+}
+.cover-photo img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.cover-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(22,35,63,.32) 0%, rgba(22,35,63,.55) 55%, rgba(22,35,63,.85) 100%);
+}
+.cover-photo-ctrl{
+  position:relative;z-index:1;
+  display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;
+}
+.mini-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;color:var(--gold-soft);
+  border:1.5px dashed rgba(228,201,138,0.55);
+  border-radius:16px;padding:6px 12px;
+  cursor:pointer;background:rgba(255,255,255,0.06);
+  font-family:inherit;
+}
+.mini-btn.ghost{border-style:solid;border-color:rgba(228,201,138,0.3);opacity:.8;}
 .chips{
   display:flex;
   gap:10px;
@@ -130,11 +197,22 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
 }
 .day:last-of-type .thread{display:none;}
 .day-content{padding-top:2px;}
+.day-title-row{display:flex;align-items:center;gap:8px;}
+.day-icon{
+  font-size:19px;
+  flex-shrink:0;
+  width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(185,141,62,0.12);
+  border-radius:50%;
+}
 .day-title{
   font-family:'Fraunces',serif;
   font-weight:600;
   font-size:18px;
   color:var(--ink);
+  flex:1;
+  min-width:0;
 }
 .day-title::placeholder{color:#b7ac8e;}
 .activities{margin-top:8px;}
@@ -162,6 +240,24 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   margin-top:10px;
   font-size:12px;
   color:var(--muted);
+}
+.day-photo-wrap{margin-top:10px;}
+.day-photo{
+  position:relative;border-radius:10px;overflow:hidden;
+  border:1px solid var(--line);
+}
+.day-photo img{display:block;width:100%;max-height:220px;object-fit:cover;}
+.rm-photo{
+  position:absolute;top:6px;right:6px;
+  background:rgba(22,35,63,0.65);color:#fff;border:none;
+  width:22px;height:22px;border-radius:50%;cursor:pointer;
+  font-size:13px;line-height:1;
+}
+.add-photo-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;color:#8a6a24;
+  border:1.5px dashed var(--gold);border-radius:8px;
+  padding:7px 12px;cursor:pointer;
 }
 .day-meta .field{display:flex;gap:5px;align-items:center;}
 .day-meta input{color:#3a3527;}
@@ -198,6 +294,7 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
 }
 .perf::before{left:-11px;}
 .perf::after{right:-11px;}
+.wave-art{display:block;width:100%;height:20px;background:#EFE7D2;}
 
 /* ---------- PRICE / FOOTER ---------- */
 .pricing{
@@ -310,8 +407,38 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
 </div>
 <div class="doc" id="doc">
   <div class="cover">
+    <svg class="cover-art" viewBox="0 0 640 230" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#E4C98A">
+        <circle cx="34" cy="20" r="1.3" opacity=".8"/>
+        <circle cx="76" cy="42" r="1" opacity=".45"/>
+        <circle cx="118" cy="16" r="1.6" opacity=".7"/>
+        <circle cx="168" cy="34" r="1" opacity=".4"/>
+        <circle cx="222" cy="18" r="1.2" opacity=".6"/>
+        <circle cx="266" cy="46" r="1" opacity=".4"/>
+        <circle cx="312" cy="14" r="1.4" opacity=".75"/>
+        <circle cx="368" cy="36" r="1" opacity=".45"/>
+        <circle cx="416" cy="20" r="1.3" opacity=".65"/>
+        <circle cx="462" cy="48" r="1" opacity=".4"/>
+        <circle cx="602" cy="18" r="1.3" opacity=".6"/>
+        <circle cx="628" cy="52" r="1" opacity=".4"/>
+      </g>
+      <circle cx="560" cy="40" r="15" fill="#E4C98A" opacity=".15"/>
+      <circle cx="560" cy="40" r="15" fill="none" stroke="#E4C98A" stroke-width="1" opacity=".5"/>
+      <path d="M0,230 L0,158 L70,104 L128,146 L206,74 L280,152 L344,116 L410,164 L486,90 L556,152 L640,126 L640,230 Z" fill="#1C2C4C" opacity=".65"/>
+      <path d="M0,230 L0,188 L96,140 L176,176 L256,132 L336,182 L416,150 L494,190 L578,158 L640,180 L640,230 Z" fill="#223257" opacity=".9"/>
+    </svg>
+    <div class="cover-photo" id="coverPhoto">
+      <img id="coverPhotoImg" alt="封面图">
+      <div class="cover-photo-overlay"></div>
+    </div>
+    <div class="visa-stamp">
+      <span class="top">NEW ZEALAND</span>
+      <span class="mid">NZ</span>
+      <span class="bot">SOUTH ISLE</span>
+    </div>
     <div class="eyebrow">Custom Itinerary Proposal</div>
     <input class="dest-input" id="dest" value="新西兰 · 南岛经典环线">
+    <div class="flourish">✦ ————————</div>
     <input class="tagline" id="tagline" value="雪山 · 星空 · 峡湾｜7日经典之旅">
     <div class="chips">
       <div class="chip"><span class="ic">◆</span>出行人数 <input id="pax" type="text" placeholder="4" style="width:30px"> 人</div>
@@ -319,12 +446,20 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
       <div class="chip"><span class="ic">◆</span>用车 <input id="vehicle" type="text" value="7座自驾/全程司导包车"></div>
       <div class="chip"><span class="ic">◆</span>出行日期 <input id="tripDate" type="text" placeholder="例如：12月10日-16日" style="width:130px"></div>
     </div>
+    <div class="cover-photo-ctrl">
+      <label class="mini-btn" for="coverPhotoInput">🖼 上传封面图</label>
+      <input type="file" id="coverPhotoInput" accept="image/*" style="display:none;">
+      <button class="mini-btn ghost" id="coverPhotoRemove" style="display:none;">移除封面图</button>
+    </div>
   </div>
 
   <div class="days" id="days"></div>
   <div class="add-day-wrap"><button class="add-day" id="addDay">+ 添加一天行程</button></div>
 
   <div class="perf"></div>
+  <svg class="wave-art" viewBox="0 0 640 26" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,14 C60,4 100,22 160,12 C220,2 260,20 320,10 C380,0 420,18 480,10 C540,2 580,18 640,8" fill="none" stroke="#C9BB98" stroke-width="1.4" opacity=".55"/>
+  </svg>
 
   <div class="pricing">
     <div class="row">
@@ -332,12 +467,12 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
       <div class="amt-wrap">¥<input id="totalPrice" type="text" value="12800"></div>
     </div>
     <div class="row">
-      <div class="label">现在支付定金<div class="rate">（平台服务费 <input id="depositRate" type="text" value="15" style="width:24px;display:inline;">%）</div></div>
-      <div class="amt-wrap now" id="depositAmt">¥570</div>
+      <div class="label">预付定金<div class="rate">（比例 <input id="depositRate" type="text" value="30" style="width:24px;display:inline;">%）</div></div>
+      <div class="amt-wrap now" id="depositAmt">¥3840</div>
     </div>
     <div class="row">
-      <div class="label">到达目的地后支付尾款</div>
-      <div class="amt-wrap later" id="balanceAmt">¥3230</div>
+      <div class="label">出发前 / 抵达后支付尾款</div>
+      <div class="amt-wrap later" id="balanceAmt">¥8960</div>
     </div>
   </div>
 
@@ -354,21 +489,22 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   </div>
 </div>
 
-<p class="hint">直接在上方模板里填写内容，完成后用手机 / 浏览器的「长截图」功能整页截图，即可发到微信对话框</p>
+<p class="hint">封面和每日行程都可以上传自己的照片；填写完成后用手机 / 浏览器的「长截图」功能整页截图，即可发到微信对话框</p>
 <div class="toast" id="toast">已复制到剪贴板</div>
 
 <script>
 let dayCounter = 0;
 let days = [];
 
-function newDay(title, acts, meal, note){
+function newDay(title, acts, meal, note, img){
   dayCounter++;
   return {
     id: dayCounter,
     title: title || '',
     acts: acts || [''],
     meal: meal || '',
-    note: note || ''
+    note: note || '',
+    img: img || null
   };
 }
 
@@ -379,6 +515,98 @@ days.push(newDay('皇后镇自由活动日', ['天空缆车 + 卢奇滑板车', 
 days.push(newDay('米尔福德峡湾一日游', ['清晨出发，途经镜湖、荷马隧道', '峡湾游船巡游（观瀑布、海豹、海豚）', '傍晚返回皇后镇'], '含早餐+午餐', '全程约11小时'));
 days.push(newDay('皇后镇 → 但尼丁', ['途经中奥塔哥酒庄，可安排品酒', '抵达但尼丁，探访皇家信天翁保护区', '有机会偶遇黄眼企鹅'], '含早餐', ''));
 days.push(newDay('但尼丁 → 摩拉基大圆石 → 基督城', ['沿海岸线打卡摩拉基大圆石', '返回基督城，送机', '结束愉快的南岛之旅'], '含早餐', '送机服务'));
+
+function dayIcon(title){
+  const t = title || '';
+  if(/星空|蒂卡波|暗夜|Tekapo/i.test(t)) return '✨';
+  if(/峡湾|米尔福德|游船|Milford/i.test(t)) return '⛵';
+  if(/企鹅|信天翁|但尼丁|Dunedin/i.test(t)) return '🐧';
+  if(/大圆石|摩拉基|Moeraki/i.test(t)) return '🪨';
+  if(/皇后镇|缆车|蹦极|跳伞|Queenstown/i.test(t)) return '🚡';
+  if(/酒庄|品酒/i.test(t)) return '🍷';
+  if(/库克山|雪山|冰川|徒步|观景/i.test(t)) return '🏔️';
+  if(/基督城|花园|抵达/i.test(t)) return '🌷';
+  if(/送机|结束/i.test(t)) return '🛫';
+  return '🧭';
+}
+
+function fileToCompressedDataURL(file, maxW, quality){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = e=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let w = img.width, h = img.height;
+        if(w > maxW){ h = Math.round(h * maxW / w); w = maxW; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderDayPhoto(d){
+  const wrap = document.querySelector(`.day-photo-wrap[data-day="${d.id}"]`);
+  if(!wrap) return;
+  wrap.innerHTML = d.img
+    ? `<div class="day-photo"><img src="${d.img}" alt=""><button class="rm-photo" data-id="${d.id}">×</button></div>`
+    : `<label class="add-photo-btn">🖼 添加当日照片<input type="file" accept="image/*" data-id="${d.id}" class="day-photo-input" style="display:none;"></label>`;
+
+  const input = wrap.querySelector('.day-photo-input');
+  if(input){
+    input.addEventListener('change', async e=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      try{
+        const day = days.find(x=>x.id==d.id);
+        day.img = await fileToCompressedDataURL(file, 900, 0.72);
+        renderDayPhoto(day);
+      }catch(err){}
+    });
+  }
+  const rm = wrap.querySelector('.rm-photo');
+  if(rm){
+    rm.addEventListener('click', ()=>{
+      const day = days.find(x=>x.id==d.id);
+      day.img = null;
+      renderDayPhoto(day);
+    });
+  }
+}
+
+let coverImg = null;
+function setCoverPhoto(url){
+  coverImg = url || null;
+  const wrap = document.getElementById('coverPhoto');
+  const img = document.getElementById('coverPhotoImg');
+  const art = document.querySelector('.cover-art');
+  const rmBtn = document.getElementById('coverPhotoRemove');
+  if(coverImg){
+    img.src = coverImg;
+    wrap.style.display = 'block';
+    art.style.display = 'none';
+    rmBtn.style.display = 'inline-flex';
+  }else{
+    wrap.style.display = 'none';
+    art.style.display = 'block';
+    rmBtn.style.display = 'none';
+  }
+}
+document.getElementById('coverPhotoInput').addEventListener('change', async e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  try{
+    const dataUrl = await fileToCompressedDataURL(file, 1000, 0.75);
+    setCoverPhoto(dataUrl);
+  }catch(err){}
+});
+document.getElementById('coverPhotoRemove').addEventListener('click', ()=> setCoverPhoto(null));
 
 function autoresize(ta){
   ta.style.height = 'auto';
@@ -397,9 +625,13 @@ function renderDays(){
         <div class="thread"></div>
       </div>
       <div class="day-content">
-        <input class="day-title" data-id="${d.id}" data-field="title" value="${d.title}" placeholder="第${idx+1}天主题，例如：环海骑行 · 日落时分">
+        <div class="day-title-row">
+          <span class="day-icon">${dayIcon(d.title)}</span>
+          <input class="day-title" data-id="${d.id}" data-field="title" value="${d.title}" placeholder="第${idx+1}天主题，例如：环海骑行 · 日落时分">
+        </div>
         <div class="activities" data-acts-for="${d.id}"></div>
         <button class="add-act" data-id="${d.id}">+ 添加一项活动</button>
+        <div class="day-photo-wrap" data-day="${d.id}"></div>
         <div class="day-meta">
           <div class="field">🍽 <input data-id="${d.id}" data-field="meal" value="${d.meal}" placeholder="餐食安排"></div>
           <div class="field">🚐 <input data-id="${d.id}" data-field="note" value="${d.note}" placeholder="当日用车/备注"></div>
@@ -409,6 +641,7 @@ function renderDays(){
     `;
     c.appendChild(el);
     renderActs(d);
+    renderDayPhoto(d);
   });
   document.getElementById('dayCountLabel').textContent = days.length;
   bindDayEvents();
@@ -447,6 +680,10 @@ function bindDayEvents(){
     inp.addEventListener('input', e=>{
       const day = days.find(x=>x.id==e.target.dataset.id);
       day[e.target.dataset.field] = e.target.value;
+      if(e.target.classList.contains('day-title')){
+        const icon = e.target.closest('.day-title-row').querySelector('.day-icon');
+        if(icon) icon.textContent = dayIcon(e.target.value);
+      }
     });
   });
   document.querySelectorAll('.add-act').forEach(btn=>{
@@ -506,8 +743,8 @@ function buildText(){
   });
   lines.push('——————————');
   lines.push(`行程总价：¥${total}`);
-  lines.push(`现在支付定金（平台服务费${rate}%）：${depositTxt}`);
-  lines.push(`到达目的地后支付尾款：${balanceTxt}`);
+  lines.push(`预付定金（${rate}%）：${depositTxt}`);
+  lines.push(`出发前/抵达后支付尾款：${balanceTxt}`);
   const notes = document.getElementById('notesText').value;
   if(notes) { lines.push(''); lines.push('温馨提示：' + notes); }
   lines.push('');
@@ -552,7 +789,8 @@ function collectData(){
     days: days,
     totalPrice: document.getElementById('totalPrice').value,
     depositRate: document.getElementById('depositRate').value,
-    notes: document.getElementById('notesText').value
+    notes: document.getElementById('notesText').value,
+    coverImg: coverImg
   };
 }
 
@@ -570,6 +808,7 @@ function applyData(data){
   renderDays();
   recalcPrice();
   autoresize(document.getElementById('notesText'));
+  setCoverPhoto(data.coverImg || null);
 }
 
 async function saveOrder(){
