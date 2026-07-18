@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新西兰南岛经典环线 · 定制行程方案</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --navy:#16233F;
+  --navy-2:#223257;
+  --gold:#B98D3E;
+  --gold-soft:#E4C98A;
+  --paper:#F6F1E4;
+  --ink:#201C16;
+  --stamp:#8B3A2B;
+  --line:#D8CBAF;
+  --muted:#8a8168;
+  font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--navy);
+  padding:32px 16px 80px;
+}
+.doc{
+  max-width:640px;
+  margin:0 auto;
+  background:var(--paper);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 30px 60px rgba(0,0,0,0.35);
+}
+/* editable inputs blend into the document */
+input, textarea{
+  font-family:inherit;
+  border:none;
+  background:transparent;
+  color:inherit;
+  width:100%;
+  padding:2px 0;
+}
+input:focus, textarea:focus{
+  outline:none;
+  background:rgba(185,141,62,0.10);
+  border-radius:4px;
+}
+input::placeholder, textarea::placeholder{color:rgba(255,255,255,0.35);}
+.paper input::placeholder, .paper textarea::placeholder{color:#b7ac8e;}
+textarea{resize:none;overflow:hidden;line-height:1.5;}
+
+/* ---------- COVER ---------- */
+.cover{
+  background:var(--navy);
+  color:var(--paper);
+  padding:30px 28px 26px;
+  position:relative;
+}
+.cover .eyebrow{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:.28em;
+  color:var(--gold-soft);
+  text-transform:uppercase;
+}
+.cover .dest-input{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:38px;
+  margin:10px 0 4px;
+  color:#fff;
+}
+.cover .dest-input::placeholder{color:rgba(255,255,255,0.4);}
+.cover .tagline{
+  font-size:14px;
+  color:#B9C0D4;
+  font-style:italic;
+}
+.chips{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+.chip{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(228,201,138,0.35);
+  border-radius:20px;
+  padding:7px 14px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12.5px;
+}
+.chip .ic{color:var(--gold-soft);font-size:13px;}
+.chip input{width:auto;min-width:36px;color:#fff;font-weight:600;text-align:left;}
+
+/* ---------- TIMELINE / DAYS ---------- */
+.days{padding:20px 24px 4px;}
+.day{
+  display:grid;
+  grid-template-columns:44px 1fr;
+  gap:14px;
+  padding-bottom:22px;
+  position:relative;
+}
+.day .rail{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.day .dot{
+  width:34px;height:34px;
+  border-radius:50%;
+  background:var(--navy);
+  color:var(--gold-soft);
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.day .thread{
+  flex:1;
+  width:2px;
+  background:var(--line);
+  margin-top:4px;
+}
+.day:last-of-type .thread{display:none;}
+.day-content{padding-top:2px;}
+.day-title{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:18px;
+  color:var(--ink);
+}
+.day-title::placeholder{color:#b7ac8e;}
+.activities{margin-top:8px;}
+.act-row{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+  padding:4px 0;
+}
+.act-row .bullet{color:var(--gold);margin-top:5px;font-size:9px;flex-shrink:0;}
+.act-row input{font-size:13.5px;color:#3a3527;}
+.rm-act{
+  background:none;border:none;color:var(--stamp);
+  font-size:14px;cursor:pointer;opacity:.5;flex-shrink:0;
+}
+.rm-act:hover{opacity:1;}
+.add-act{
+  font-size:12px;color:#8a6a24;
+  background:none;border:none;cursor:pointer;
+  padding:4px 0 0 15px;
+}
+.day-meta{
+  display:flex;
+  gap:16px;
+  margin-top:10px;
+  font-size:12px;
+  color:var(--muted);
+}
+.day-meta .field{display:flex;gap:5px;align-items:center;}
+.day-meta input{color:#3a3527;}
+.day-actions{
+  display:flex;justify-content:flex-end;margin-top:6px;
+}
+.rm-day{
+  background:none;border:none;color:var(--stamp);
+  font-size:11px;cursor:pointer;opacity:.55;
+}
+.rm-day:hover{opacity:1;}
+
+.add-day-wrap{padding:0 24px 20px;}
+.add-day{
+  width:100%;
+  padding:10px;
+  border:1.5px dashed var(--gold);
+  background:transparent;
+  color:#8a6a24;
+  border-radius:8px;
+  font-weight:600;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.perf{
+  position:relative;height:0;
+  border-top:2px dashed #C9BB98;
+  margin:0 0 0;
+}
+.perf::before,.perf::after{
+  content:'';position:absolute;top:-11px;
+  width:22px;height:22px;background:var(--navy);border-radius:50%;
+}
+.perf::before{left:-11px;}
+.perf::after{right:-11px;}
+
+/* ---------- PRICE / FOOTER ---------- */
+.pricing{
+  background:#EFE7D2;
+  padding:20px 24px;
+}
+.pricing .row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;
+}
+.pricing .label{font-size:13px;color:var(--muted);}
+.pricing .amt-wrap{display:flex;align-items:center;gap:2px;font-family:'Space Mono',monospace;font-weight:700;font-size:16px;}
+.pricing .amt-wrap input{width:90px;text-align:right;color:var(--ink);}
+.pricing .now{color:var(--stamp);}
+.pricing .later{color:var(--navy-2);}
+.pricing .rate{font-size:11px;color:var(--muted);}
+
+.notes{
+  padding:16px 24px 4px;
+}
+.notes label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+.notes textarea{
+  font-size:12.5px;color:#4a4430;margin-top:4px;min-height:44px;line-height:1.7;
+}
+
+.cta{
+  margin:16px 24px 22px;
+  border:1.5px dashed var(--gold);
+  border-radius:10px;
+  padding:14px;
+  text-align:center;
+  font-size:12.5px;
+  color:#8a6a24;
+}
+
+.foot-tools{
+  display:flex;gap:10px;
+  padding:0 24px 24px;
+}
+.foot-btn{
+  flex:1;padding:11px;border-radius:8px;border:none;
+  font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;
+}
+.foot-btn.primary{background:var(--navy);color:var(--gold-soft);}
+.foot-btn.primary:hover{background:var(--navy-2);}
+.foot-btn.ghost{background:transparent;border:1.5px solid var(--navy);color:var(--navy);}
+
+.hint{
+  text-align:center;color:#9aa3bd;font-size:11.5px;
+  max-width:640px;margin:14px auto 0;
+}
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:var(--navy);color:var(--gold-soft);
+  padding:10px 18px;border-radius:8px;font-size:13px;
+  font-family:'Space Mono',monospace;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+  z-index:50;
+}
+.toast.show{opacity:1;}
+
+.orderbar{
+  max-width:640px;margin:0 auto 14px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(228,201,138,0.35);
+  border-radius:10px;
+  padding:10px 14px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  color:var(--paper);
+  font-size:12.5px;
+}
+.orderbar input{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(228,201,138,0.25);
+  border-radius:6px;
+  padding:6px 8px;
+  color:#fff;
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  width:140px;
+}
+.orderbar button{
+  background:var(--gold);
+  border:none;color:var(--navy);
+  font-weight:700;
+  padding:7px 12px;
+  border-radius:6px;
+  font-size:12px;
+  cursor:pointer;
+  font-family:inherit;
+}
+.orderbar button.ghost{
+  background:transparent;border:1px solid var(--gold-soft);color:var(--gold-soft);
+}
+.orderbar .status{font-size:11px;color:#B9C0D4;}
+</style>
+</head>
+<body>
+
+<div class="orderbar" id="orderbar">
+  <span>取件码：</span>
+  <input type="text" id="orderCode" placeholder="自动生成">
+  <button id="saveOrderBtn">保存这份方案</button>
+  <button class="ghost" id="linkBtn">生成专属链接</button>
+  <button class="ghost" id="loadOrderBtn">按取件码打开</button>
+  <span class="status" id="orderStatus"></span>
+</div>
+<div class="doc" id="doc">
+  <div class="cover">
+    <div class="eyebrow">Custom Itinerary Proposal</div>
+    <input class="dest-input" id="dest" value="新西兰 · 南岛经典环线">
+    <input class="tagline" id="tagline" value="雪山 · 星空 · 峡湾｜7日经典之旅">
+    <div class="chips">
+      <div class="chip"><span class="ic">◆</span>出行人数 <input id="pax" type="text" placeholder="4" style="width:30px"> 人</div>
+      <div class="chip"><span class="ic">◆</span>行程天数 <span id="dayCountLabel">3</span> 天</div>
+      <div class="chip"><span class="ic">◆</span>用车 <input id="vehicle" type="text" value="7座自驾/全程司导包车"></div>
+      <div class="chip"><span class="ic">◆</span>出行日期 <input id="tripDate" type="text" placeholder="例如：12月10日-16日" style="width:130px"></div>
+    </div>
+  </div>
+
+  <div class="days" id="days"></div>
+  <div class="add-day-wrap"><button class="add-day" id="addDay">+ 添加一天行程</button></div>
+
+  <div class="perf"></div>
+
+  <div class="pricing">
+    <div class="row">
+      <div class="label">行程总价</div>
+      <div class="amt-wrap">¥<input id="totalPrice" type="text" value="12800"></div>
+    </div>
+    <div class="row">
+      <div class="label">现在支付定金<div class="rate">（平台服务费 <input id="depositRate" type="text" value="15" style="width:24px;display:inline;">%）</div></div>
+      <div class="amt-wrap now" id="depositAmt">¥570</div>
+    </div>
+    <div class="row">
+      <div class="label">到达目的地后支付尾款</div>
+      <div class="amt-wrap later" id="balanceAmt">¥3230</div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <label>温馨提示</label>
+    <textarea id="notesText" placeholder="例如：以上行程可根据天气及个人喜好微调；建议携带轻便衣物及防晒用品。">南岛昼夜温差大，建议携带冲锋衣/抓绒等分层衣物；自驾需持国际驾照翻译认证件；峡湾游船、缆车等热门项目建议提前预约；具体行程可根据天气及路况微调。</textarea>
+  </div>
+
+  <div class="cta">请确认以上行程与报价，回复"确认"后为您发送定金付款链接</div>
+
+  <div class="foot-tools">
+    <button class="foot-btn ghost" id="copyBtn">复制文字版</button>
+    <button class="foot-btn primary" id="shotHint">📸 长截图分享提示</button>
+  </div>
+</div>
+
+<p class="hint">直接在上方模板里填写内容，完成后用手机 / 浏览器的「长截图」功能整页截图，即可发到微信对话框</p>
+<div class="toast" id="toast">已复制到剪贴板</div>
+
+<script>
+let dayCounter = 0;
+let days = [];
+
+function newDay(title, acts, meal, note){
+  dayCounter++;
+  return {
+    id: dayCounter,
+    title: title || '',
+    acts: acts || [''],
+    meal: meal || '',
+    note: note || ''
+  };
+}
+
+days.push(newDay('抵达基督城 · 花园城市漫步', ['接机，入住酒店', '雅芳河畔漫步 / 撑篙体验', '大教堂广场、植物园自由活动'], '不含餐', '接机服务'));
+days.push(newDay('基督城 → 蒂卡波湖', ['沿坎特伯雷平原一路南下', '打卡网红「牧羊人教堂」', '夜观南半球星空（蒂卡波为国际暗夜保护区）'], '含早餐', '全程包车'));
+days.push(newDay('蒂卡波 → 库克山 → 皇后镇', ['库克山国家公园徒步观景（胡克山谷步道）', '远眺新西兰最高峰', '傍晚抵达皇后镇，入住湖畔酒店'], '含早餐', ''));
+days.push(newDay('皇后镇自由活动日', ['天空缆车 + 卢奇滑板车', '瓦卡蒂普湖蒸汽船茶叙庄园', '可选加购：蹦极 / 跳伞 / 喷射快艇'], '含早餐', '极限项目需提前预约'));
+days.push(newDay('米尔福德峡湾一日游', ['清晨出发，途经镜湖、荷马隧道', '峡湾游船巡游（观瀑布、海豹、海豚）', '傍晚返回皇后镇'], '含早餐+午餐', '全程约11小时'));
+days.push(newDay('皇后镇 → 但尼丁', ['途经中奥塔哥酒庄，可安排品酒', '抵达但尼丁，探访皇家信天翁保护区', '有机会偶遇黄眼企鹅'], '含早餐', ''));
+days.push(newDay('但尼丁 → 摩拉基大圆石 → 基督城', ['沿海岸线打卡摩拉基大圆石', '返回基督城，送机', '结束愉快的南岛之旅'], '含早餐', '送机服务'));
+
+function autoresize(ta){
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
+}
+
+function renderDays(){
+  const c = document.getElementById('days');
+  c.innerHTML = '';
+  days.forEach((d, idx)=>{
+    const el = document.createElement('div');
+    el.className = 'day';
+    el.innerHTML = `
+      <div class="rail">
+        <div class="dot">D${idx+1}</div>
+        <div class="thread"></div>
+      </div>
+      <div class="day-content">
+        <input class="day-title" data-id="${d.id}" data-field="title" value="${d.title}" placeholder="第${idx+1}天主题，例如：环海骑行 · 日落时分">
+        <div class="activities" data-acts-for="${d.id}"></div>
+        <button class="add-act" data-id="${d.id}">+ 添加一项活动</button>
+        <div class="day-meta">
+          <div class="field">🍽 <input data-id="${d.id}" data-field="meal" value="${d.meal}" placeholder="餐食安排"></div>
+          <div class="field">🚐 <input data-id="${d.id}" data-field="note" value="${d.note}" placeholder="当日用车/备注"></div>
+        </div>
+        <div class="day-actions"><button class="rm-day" data-id="${d.id}">删除这一天</button></div>
+      </div>
+    `;
+    c.appendChild(el);
+    renderActs(d);
+  });
+  document.getElementById('dayCountLabel').textContent = days.length;
+  bindDayEvents();
+}
+
+function renderActs(d){
+  const holder = document.querySelector(`[data-acts-for="${d.id}"]`);
+  holder.innerHTML = '';
+  d.acts.forEach((a, aidx)=>{
+    const row = document.createElement('div');
+    row.className = 'act-row';
+    row.innerHTML = `
+      <span class="bullet">●</span>
+      <input type="text" value="${a}" data-day="${d.id}" data-aidx="${aidx}" placeholder="推荐玩法 / 行程安排">
+      <button class="rm-act" data-day="${d.id}" data-aidx="${aidx}">×</button>
+    `;
+    holder.appendChild(row);
+  });
+  holder.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('input', e=>{
+      const day = days.find(x=>x.id==e.target.dataset.day);
+      day.acts[+e.target.dataset.aidx] = e.target.value;
+    });
+  });
+  holder.querySelectorAll('.rm-act').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const day = days.find(x=>x.id==e.target.dataset.day);
+      day.acts.splice(+e.target.dataset.aidx, 1);
+      renderActs(day);
+    });
+  });
+}
+
+function bindDayEvents(){
+  document.querySelectorAll('.day-title, .day-meta input').forEach(inp=>{
+    inp.addEventListener('input', e=>{
+      const day = days.find(x=>x.id==e.target.dataset.id);
+      day[e.target.dataset.field] = e.target.value;
+    });
+  });
+  document.querySelectorAll('.add-act').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const day = days.find(x=>x.id==e.target.dataset.id);
+      day.acts.push('');
+      renderActs(day);
+    });
+  });
+  document.querySelectorAll('.rm-day').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      days = days.filter(x=>x.id!=e.target.dataset.id);
+      renderDays();
+    });
+  });
+}
+
+document.getElementById('addDay').addEventListener('click', ()=>{
+  days.push(newDay('', [''], '', ''));
+  renderDays();
+});
+
+function recalcPrice(){
+  const total = parseFloat(document.getElementById('totalPrice').value.replace(/[^\d.]/g,'')) || 0;
+  const rate = parseFloat(document.getElementById('depositRate').value) || 0;
+  const deposit = Math.round(total * rate/100);
+  const balance = Math.round(total - deposit);
+  document.getElementById('depositAmt').innerHTML = '¥' + deposit.toLocaleString('zh-CN');
+  document.getElementById('balanceAmt').textContent = '¥' + balance.toLocaleString('zh-CN');
+}
+document.getElementById('totalPrice').addEventListener('input', recalcPrice);
+document.getElementById('depositRate').addEventListener('input', recalcPrice);
+
+document.getElementById('notesText').addEventListener('input', e=>autoresize(e.target));
+
+function buildText(){
+  const dest = document.getElementById('dest').value || '目的地';
+  const tagline = document.getElementById('tagline').value || '';
+  const pax = document.getElementById('pax').value || '--';
+  const vehicle = document.getElementById('vehicle').value || '--';
+  const tripDate = document.getElementById('tripDate').value || '待定';
+  const total = document.getElementById('totalPrice').value || '0';
+  const rate = document.getElementById('depositRate').value || '0';
+  const depositTxt = document.getElementById('depositAmt').textContent;
+  const balanceTxt = document.getElementById('balanceAmt').textContent;
+
+  let lines = [];
+  lines.push(`【定制行程方案】${dest}`);
+  if(tagline) lines.push(tagline);
+  lines.push(`出行日期：${tripDate}　人数：${pax}人　用车：${vehicle}`);
+  lines.push('——————————');
+  days.forEach((d, idx)=>{
+    lines.push(`Day${idx+1}｜${d.title || '未命名'}`);
+    d.acts.filter(a=>a.trim()).forEach(a=> lines.push('　· ' + a));
+    if(d.meal) lines.push('　餐食：' + d.meal);
+    if(d.note) lines.push('　用车/备注：' + d.note);
+  });
+  lines.push('——————————');
+  lines.push(`行程总价：¥${total}`);
+  lines.push(`现在支付定金（平台服务费${rate}%）：${depositTxt}`);
+  lines.push(`到达目的地后支付尾款：${balanceTxt}`);
+  const notes = document.getElementById('notesText').value;
+  if(notes) { lines.push(''); lines.push('温馨提示：' + notes); }
+  lines.push('');
+  lines.push('请确认以上行程与报价，回复"确认"后为您发送定金付款链接。');
+  return lines.join('\n');
+}
+
+document.getElementById('copyBtn').addEventListener('click', async ()=>{
+  const text = buildText();
+  try{ await navigator.clipboard.writeText(text); }
+  catch(e){
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+});
+
+document.getElementById('shotHint').addEventListener('click', ()=>{
+  const t = document.getElementById('toast');
+  t.textContent = 'iPhone：截屏后点预览选"整页" · 安卓：多数机型截屏菜单里有"长截图"';
+  t.classList.add('show');
+  setTimeout(()=>{t.classList.remove('show'); t.textContent='已复制到剪贴板';}, 3200);
+});
+
+
+function randCode(){
+  const dest = (document.getElementById('dest').value||'trip').replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g,'').slice(0,6);
+  const t = Date.now().toString(36).slice(-4);
+  return (dest||'ORD') + '-' + t;
+}
+
+function collectData(){
+  return {
+    dest: document.getElementById('dest').value,
+    tagline: document.getElementById('tagline').value,
+    pax: document.getElementById('pax').value,
+    vehicle: document.getElementById('vehicle').value,
+    tripDate: document.getElementById('tripDate').value,
+    days: days,
+    totalPrice: document.getElementById('totalPrice').value,
+    depositRate: document.getElementById('depositRate').value,
+    notes: document.getElementById('notesText').value
+  };
+}
+
+function applyData(data){
+  document.getElementById('dest').value = data.dest || '';
+  document.getElementById('tagline').value = data.tagline || '';
+  document.getElementById('pax').value = data.pax || '';
+  document.getElementById('vehicle').value = data.vehicle || '';
+  document.getElementById('tripDate').value = data.tripDate || '';
+  document.getElementById('totalPrice').value = data.totalPrice || '';
+  document.getElementById('depositRate').value = data.depositRate || '15';
+  document.getElementById('notesText').value = data.notes || '';
+  days = data.days || days;
+  dayCounter = days.reduce((m,d)=>Math.max(m,d.id),0);
+  renderDays();
+  recalcPrice();
+  autoresize(document.getElementById('notesText'));
+}
+
+async function saveOrder(){
+  const status = document.getElementById('orderStatus');
+  let code = document.getElementById('orderCode').value.trim();
+  if(!code){ code = randCode(); document.getElementById('orderCode').value = code; }
+  try{
+    const data = collectData();
+    await window.storage.set('order:' + code, JSON.stringify(data), true);
+    status.textContent = '已保存 · 取件码 ' + code;
+  }catch(e){
+    status.textContent = '保存失败：请在 Claude 网页 / App 内打开此方案后再试';
+  }
+}
+
+async function loadOrderByCode(code){
+  const status = document.getElementById('orderStatus');
+  if(!code) return;
+  try{
+    const res = await window.storage.get('order:' + code, true);
+    if(res && res.value){
+      applyData(JSON.parse(res.value));
+      status.textContent = '已读取 · 取件码 ' + code;
+    }else{
+      status.textContent = '没有找到该取件码对应的方案';
+    }
+  }catch(e){
+    status.textContent = '读取失败：请在 Claude 网页 / App 内打开此方案后再试';
+  }
+}
+
+document.getElementById('saveOrderBtn').addEventListener('click', saveOrder);
+document.getElementById('loadOrderBtn').addEventListener('click', ()=>{
+  loadOrderByCode(document.getElementById('orderCode').value.trim());
+});
+document.getElementById('linkBtn').addEventListener('click', async ()=>{
+  let code = document.getElementById('orderCode').value.trim();
+  if(!code){ await saveOrder(); code = document.getElementById('orderCode').value.trim(); }
+  const url = window.location.origin + window.location.pathname + '?order=' + encodeURIComponent(code);
+  try{ await navigator.clipboard.writeText(url); }catch(e){}
+  document.getElementById('orderStatus').textContent = '专属链接已复制到剪贴板';
+});
+
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('order');
+  if(code){
+    document.getElementById('orderCode').value = code;
+    loadOrderByCode(code);
+  }
+})();
+
+renderDays();
+recalcPrice();
+</script>
+</body>
+</html>
