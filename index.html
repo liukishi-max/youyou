@@ -146,6 +146,65 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
 }
 .mini-btn.ghost{border-style:solid;border-color:rgba(228,201,138,0.3);opacity:.8;}
 
+.tz-strip{
+  position:relative;z-index:1;
+  margin-top:14px;
+  display:flex;
+  align-items:stretch;
+  gap:0;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(228,201,138,0.3);
+  border-radius:12px;
+  padding:12px 14px;
+  flex-wrap:wrap;
+}
+.tz-block{flex:1;min-width:120px;}
+.tz-head{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+.tz-ic{font-size:12px;color:var(--gold-soft);flex-shrink:0;}
+.tz-label-input{
+  font-size:12px;font-weight:600;color:#fff;
+  min-width:0;
+}
+.tz-zone-select{
+  font-family:inherit;
+  font-size:10.5px;
+  color:var(--gold-soft);
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(228,201,138,0.3);
+  border-radius:6px;
+  padding:2px 4px;
+  margin-bottom:7px;
+  width:100%;
+  max-width:180px;
+}
+.tz-zone-select option{color:#201C16;}
+.tz-time{
+  font-family:'Space Mono',monospace;
+  font-size:23px;font-weight:700;color:#fff;
+  line-height:1.1;
+}
+.tz-date{font-size:10.5px;color:#B9C0D4;margin-top:3px;}
+.tz-diff{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;
+  font-size:11px;color:var(--gold-soft);
+  text-align:center;
+  padding:0 14px;
+  border-left:1px dashed rgba(228,201,138,0.3);
+  border-right:1px dashed rgba(228,201,138,0.3);
+  white-space:nowrap;
+}
+@media (max-width:480px){
+  .tz-strip{gap:10px;}
+  .tz-diff{
+    order:3;width:100%;
+    border-left:none;border-right:none;
+    border-top:1px dashed rgba(228,201,138,0.3);
+    padding:8px 0 0;margin-top:2px;
+  }
+}
+
 /* ---------- ROUTE OVERVIEW MAP ---------- */
 .route-overview{
   background:var(--navy);
@@ -249,24 +308,40 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   min-width:0;
 }
 .day-title::placeholder{color:#b7ac8e;}
-.activities{margin-top:8px;}
-.act-row{
+.day-geo-row{
+  margin-top:7px;
   display:flex;
-  gap:8px;
+  gap:6px;
   align-items:flex-start;
-  padding:4px 0;
+  font-size:12.5px;
+  color:#6b6248;
 }
-.act-row .bullet{color:var(--gold);margin-top:5px;font-size:9px;flex-shrink:0;}
-.act-row input{font-size:13.5px;color:#3a3527;}
-.rm-act{
-  background:none;border:none;color:var(--stamp);
-  font-size:14px;cursor:pointer;opacity:.5;flex-shrink:0;
+.day-geo-row .field-label{
+  font-weight:700;
+  color:var(--ink);
+  flex-shrink:0;
+  white-space:nowrap;
 }
-.rm-act:hover{opacity:1;}
-.add-act{
-  font-size:12px;color:#8a6a24;
-  background:none;border:none;cursor:pointer;
-  padding:4px 0 0 15px;
+.day-geo-row textarea{font-size:12.5px;color:#6b6248;line-height:1.6;min-height:18px;}
+.day-desc-row{
+  margin-top:8px;
+  display:flex;
+  gap:6px;
+  align-items:flex-start;
+  font-size:13px;
+  color:#3a3527;
+}
+.day-desc-row .field-label{
+  font-weight:700;
+  color:var(--ink);
+  flex-shrink:0;
+  white-space:nowrap;
+}
+.day-desc-row textarea{
+  font-size:13px;
+  color:#3a3527;
+  line-height:1.7;
+  min-height:22px;
 }
 .day-photo-wrap{margin-top:10px;}
 .day-photo{
@@ -516,14 +591,35 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
     <div class="eyebrow">Custom Itinerary Proposal</div>
     <input class="dest-input" id="dest" value="新西兰 · 南岛经典环线">
     <div class="flourish">✦ ————————</div>
-    <input class="tagline" id="tagline" value="雪山 · 星空 · 峡湾｜7日经典之旅">
+    <input class="tagline" id="tagline" value="雪山 · 星空 · 峡湾｜4日精华之旅">
     <div class="chips">
       <div class="chip"><span class="ic">◆</span>出行人数 <input id="pax" type="text" placeholder="4" style="width:30px"> 人</div>
       <div class="chip"><span class="ic">◆</span>出发地 <input id="startCity" type="text" placeholder="基督城" style="width:70px"></div>
       <div class="chip"><span class="ic">◆</span>结束地 <input id="endCity" type="text" placeholder="皇后镇" style="width:70px"></div>
-      <div class="chip"><span class="ic">◆</span>行程天数 <span id="dayCountLabel">3</span> 天</div>
+      <div class="chip"><span class="ic">◆</span>行程天数 <input id="dayCountInput" type="text" inputmode="numeric" value="4" style="width:26px;text-align:center;"> 天</div>
       <div class="chip"><span class="ic">◆</span>用车 <input id="vehicle" type="text" value="7座自驾/全程司导包车"></div>
       <div class="chip"><span class="ic">◆</span>出行日期 <input id="tripDate" type="text" placeholder="例如：12月10日-16日" style="width:130px"></div>
+    </div>
+    <div class="tz-strip">
+      <div class="tz-block">
+        <div class="tz-head">
+          <span class="tz-ic">🧭</span>
+          <input id="tzMineLabel" class="tz-label-input" type="text" value="旧金山" placeholder="你的所在城市">
+        </div>
+        <select id="tzMineZone" class="tz-zone-select"></select>
+        <div class="tz-time" id="tzMineTime">--:--</div>
+        <div class="tz-date" id="tzMineDate"></div>
+      </div>
+      <div class="tz-diff" id="tzDiff">时差 --</div>
+      <div class="tz-block">
+        <div class="tz-head">
+          <span class="tz-ic">📍</span>
+          <input id="tzDestLabel" class="tz-label-input" type="text" value="新西兰 · 基督城" placeholder="目的地城市">
+        </div>
+        <select id="tzDestZone" class="tz-zone-select"></select>
+        <div class="tz-time" id="tzDestTime">--:--</div>
+        <div class="tz-date" id="tzDestDate"></div>
+      </div>
     </div>
     <div class="cover-photo-ctrl">
       <label class="mini-btn" for="coverPhotoInput">🖼 上传封面图</label>
@@ -588,7 +684,7 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
     <div class="col incl">
       <label><span class="mark">✓</span>费用包含</label>
       <ol class="fee-list">
-        <li>车辆：7座车费（油费、过路费、空返）<input id="carModel" type="text" value="7座阿尔法、奔驰或同级车型"></li>
+        <li>车辆：<input id="seatCount" type="text" value="7" style="width:20px;text-align:center;">座车费（油费、过路费、空返）<input id="carModel" type="text" value="阿尔法、奔驰或同级车型"></li>
         <li>司导/司机：一名华人司机兼向导服务，司导（小费、餐补、住宿），只提供车上简单介绍/推荐/指引/注意事项，不陪同游览</li>
         <li>时长：全天包车10小时服务（正常09:00-19:00），半天包车5小时服务</li>
         <li>接机/送机/单程服务：接机航班实际抵达90分钟免费等待，送机接待时间30分钟免费等待，单程服务接待时间30分钟免费等待</li>
@@ -629,27 +725,29 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
 let dayCounter = 0;
 let days = [];
 
-function newDay(title, acts, img){
+function newDay(title, geo, desc, img){
   dayCounter++;
   return {
     id: dayCounter,
     title: title || '',
-    acts: acts || [''],
+    geo: geo || '',
+    desc: desc || '',
     img: img || null
   };
 }
 
-days.push(newDay('抵达基督城 · 花园城市漫步', ['接机，入住酒店', '雅芳河畔漫步 / 撑篙体验', '大教堂广场、植物园自由活动']));
-days.push(newDay('基督城 → 蒂卡波湖', ['沿坎特伯雷平原一路南下', '打卡网红「牧羊人教堂」', '夜观南半球星空（蒂卡波为国际暗夜保护区）']));
-days.push(newDay('蒂卡波 → 库克山 → 皇后镇', ['库克山国家公园徒步观景（胡克山谷步道）', '远眺新西兰最高峰', '傍晚抵达皇后镇，入住湖畔酒店']));
-days.push(newDay('皇后镇自由活动日', ['天空缆车 + 卢奇滑板车', '瓦卡蒂普湖蒸汽船茶叙庄园', '可选加购：蹦极 / 跳伞 / 喷射快艇']));
-days.push(newDay('米尔福德峡湾一日游', ['清晨出发，途经镜湖、荷马隧道', '峡湾游船巡游（观瀑布、海豹、海豚）', '傍晚返回皇后镇']));
-days.push(newDay('皇后镇 → 但尼丁', ['途经中奥塔哥酒庄，可安排品酒', '抵达但尼丁，探访皇家信天翁保护区', '有机会偶遇黄眼企鹅']));
-days.push(newDay('但尼丁 → 摩拉基大圆石 → 基督城', ['沿海岸线打卡摩拉基大圆石', '返回基督城，送机', '结束愉快的南岛之旅']));
+function dayIconText(d){
+  return [d.title, d.geo, d.desc].filter(Boolean).join(' ');
+}
+
+days.push(newDay('皇后镇周边深度游', '皇后镇酒店 - 格林诺奇 (Glenorchy) - 皇后镇', '司导在皇后镇酒店接客人出发，前往"魔戒小镇"格林诺奇。这是一条被誉为世界最美公路之一的路线，沿湖行进，风景极佳。在格林诺奇游览后返回皇后镇，客人可自由活动。'));
+days.push(newDay('皇后镇至特威泽尔 (Twizel) 景观长廊', '皇后镇 - 箭镇 (Arrowtown) - 卡瓦劳蹦极大桥 (Kawarau Bridge) - 瓦纳卡 (Wanaka) - 孤独树 - 迷宫世界 (Puzzling World) - 高山三文鱼场 (Mt Cook Alpine Salmon) - 普卡基湖 (Lake Pukaki) - 特威泽尔 (Twizel)', '一路向北，首先探访历史悠久的箭镇和蹦极发源地。抵达瓦纳卡后，打卡孤独树并体验趣味十足的迷宫世界。下午沿途经高山三文鱼场和湖水如绿松石般璀璨的普卡基湖，最终抵达特威泽尔入住。'));
+days.push(newDay('库克山国家公园与特卡波湖 (Tekapo)', '特威泽尔 (Twizel) - 库克山 (Mt Cook) - 胡克步道 (Hooker Valley Track) - 特卡波湖 (Lake Tekapo) - 好牧羊人教堂 (Church of the Good Shepherd)', '上午前往库克山，根据天气安排冰川直升机观光或胡克步道徒步。下午前往特卡波湖，参观好牧羊人教堂，沉浸在星空小镇的湖光山色中，晚上可在湖畔观星。'));
+days.push(newDay('约翰山与基督城归途', '特卡波 (Tekapo) - 约翰山 (Mt John) Astro咖啡馆 - 费尔利 (Fairlie) 派店 - 基督城 (Christchurch) - 南极中心/柳岸野生动物保护区', '上午登上约翰山顶在Astro咖啡馆俯瞰全景，中途在费尔利小镇品尝新西兰著名的派。下午启程回基督城，若时间充裕，可安排南极中心或柳岸野生动物保护区参观，或进行简单的市区游览。'));
 
 function dayIcon(title){
   const t = title || '';
-  if(/星空|蒂卡波|暗夜|Tekapo/i.test(t)) return '✨';
+  if(/星空|蒂卡波|特卡波|暗夜|Tekapo/i.test(t)) return '✨';
   if(/峡湾|米尔福德|游船|Milford/i.test(t)) return '⛵';
   if(/企鹅|信天翁|但尼丁|Dunedin/i.test(t)) return '🐧';
   if(/大圆石|摩拉基|Moeraki/i.test(t)) return '🪨';
@@ -760,7 +858,12 @@ const PLACES = {
   '皮克顿': {x:290, y:60, label:'皮克顿'},
   '格雷茅斯': {x:90, y:250, label:'格雷茅斯'},
   '弗朗兹约瑟夫': {x:75, y:300, label:'弗朗兹约瑟夫冰川'},
-  '福克斯冰川': {x:70, y:320, label:'福克斯冰川'}
+  '福克斯冰川': {x:70, y:320, label:'福克斯冰川'},
+  '特卡波': {x:230, y:340, label:'特卡波'},
+  '特威泽尔': {x:210, y:380, label:'特威泽尔'},
+  '格林诺奇': {x:120, y:440, label:'格林诺奇'},
+  '箭镇': {x:180, y:445, label:'箭镇'},
+  '约翰山': {x:240, y:345, label:'约翰山'}
 };
 
 function extractPlaces(title){
@@ -780,7 +883,7 @@ function extractPlaces(title){
 }
 
 function computeDayPlaces(){
-  const raw = days.map(d => extractPlaces(d.title));
+  const raw = days.map(d => extractPlaces((d.geo||'') + ' ' + (d.title||'')));
   const n = days.length;
   const effStop = new Array(n).fill(null);
   const dayWaypoints = new Array(n).fill(null).map(()=>[]);
@@ -897,50 +1000,28 @@ function renderDays(){
       </div>
       <div class="day-content">
         <div class="day-title-row">
-          <span class="day-icon">${dayIcon(d.title)}</span>
-          <input class="day-title" data-id="${d.id}" data-field="title" value="${d.title}" placeholder="第${idx+1}天主题，例如：环海骑行 · 日落时分">
+          <span class="day-icon">${dayIcon(dayIconText(d))}</span>
+          <input class="day-title" data-id="${d.id}" data-field="title" value="${d.title}" placeholder="第${idx+1}天概括，例如：皇后镇 → 特威泽尔">
         </div>
-        <div class="activities" data-acts-for="${d.id}"></div>
-        <button class="add-act" data-id="${d.id}">+ 添加一项活动</button>
+        <div class="day-geo-row">
+          <span class="field-label">地理地点：</span>
+          <textarea class="day-geo" data-id="${d.id}" data-field="geo" rows="1" placeholder="途经/到达的地理地点，可留空，例如：皇后镇 - 箭镇 - 瓦纳卡">${d.geo || ''}</textarea>
+        </div>
+        <div class="day-desc-row">
+          <span class="field-label">行程描述：</span>
+          <textarea class="day-desc" data-id="${d.id}" data-field="desc" rows="1" placeholder="详细行程描述，可自动换行...">${d.desc || ''}</textarea>
+        </div>
         <div class="day-photo-wrap" data-day="${d.id}"></div>
         <div class="day-actions"><button class="rm-day" data-id="${d.id}">删除这一天</button></div>
       </div>
     `;
     c.appendChild(el);
-    renderActs(d);
     renderDayPhoto(d);
   });
-  document.getElementById('dayCountLabel').textContent = days.length;
+  const dayCountInput = document.getElementById('dayCountInput');
+  if(document.activeElement !== dayCountInput) dayCountInput.value = days.length;
   bindDayEvents();
   renderRouteMap();
-}
-
-function renderActs(d){
-  const holder = document.querySelector(`[data-acts-for="${d.id}"]`);
-  holder.innerHTML = '';
-  d.acts.forEach((a, aidx)=>{
-    const row = document.createElement('div');
-    row.className = 'act-row';
-    row.innerHTML = `
-      <span class="bullet">●</span>
-      <input type="text" value="${a}" data-day="${d.id}" data-aidx="${aidx}" placeholder="推荐玩法 / 行程安排">
-      <button class="rm-act" data-day="${d.id}" data-aidx="${aidx}">×</button>
-    `;
-    holder.appendChild(row);
-  });
-  holder.querySelectorAll('input').forEach(inp=>{
-    inp.addEventListener('input', e=>{
-      const day = days.find(x=>x.id==e.target.dataset.day);
-      day.acts[+e.target.dataset.aidx] = e.target.value;
-    });
-  });
-  holder.querySelectorAll('.rm-act').forEach(btn=>{
-    btn.addEventListener('click', e=>{
-      const day = days.find(x=>x.id==e.target.dataset.day);
-      day.acts.splice(+e.target.dataset.aidx, 1);
-      renderActs(day);
-    });
-  });
 }
 
 function bindDayEvents(){
@@ -948,18 +1029,30 @@ function bindDayEvents(){
     inp.addEventListener('input', e=>{
       const day = days.find(x=>x.id==e.target.dataset.id);
       day[e.target.dataset.field] = e.target.value;
-      if(e.target.classList.contains('day-title')){
-        const icon = e.target.closest('.day-title-row').querySelector('.day-icon');
-        if(icon) icon.textContent = dayIcon(e.target.value);
-        renderRouteMap();
-      }
+      const icon = e.target.closest('.day-content').querySelector('.day-icon');
+      if(icon) icon.textContent = dayIcon(dayIconText(day));
+      renderRouteMap();
     });
   });
-  document.querySelectorAll('.add-act').forEach(btn=>{
-    btn.addEventListener('click', e=>{
+  document.querySelectorAll('.day-geo').forEach(ta=>{
+    autoresize(ta);
+    ta.addEventListener('input', e=>{
       const day = days.find(x=>x.id==e.target.dataset.id);
-      day.acts.push('');
-      renderActs(day);
+      day[e.target.dataset.field] = e.target.value;
+      autoresize(e.target);
+      const icon = e.target.closest('.day-content').querySelector('.day-icon');
+      if(icon) icon.textContent = dayIcon(dayIconText(day));
+      renderRouteMap();
+    });
+  });
+  document.querySelectorAll('.day-desc').forEach(ta=>{
+    autoresize(ta);
+    ta.addEventListener('input', e=>{
+      const day = days.find(x=>x.id==e.target.dataset.id);
+      day[e.target.dataset.field] = e.target.value;
+      autoresize(e.target);
+      const icon = e.target.closest('.day-content').querySelector('.day-icon');
+      if(icon) icon.textContent = dayIcon(dayIconText(day));
     });
   });
   document.querySelectorAll('.rm-day').forEach(btn=>{
@@ -971,8 +1064,37 @@ function bindDayEvents(){
 }
 
 document.getElementById('addDay').addEventListener('click', ()=>{
-  days.push(newDay('', ['']));
+  days.push(newDay('', '', ''));
   renderDays();
+});
+
+
+function setDayCount(n){
+  n = Math.max(1, Math.min(30, n || 1));
+  if(n > days.length){
+    while(days.length < n){
+      days.push(newDay('', '', ''));
+    }
+  }else if(n < days.length){
+    days = days.slice(0, n);
+  }
+  renderDays();
+}
+
+const dayCountInputEl = document.getElementById('dayCountInput');
+dayCountInputEl.addEventListener('input', ()=>{
+  dayCountInputEl.value = dayCountInputEl.value.replace(/[^\d]/g, '');
+});
+dayCountInputEl.addEventListener('change', ()=>{
+  const n = parseInt(dayCountInputEl.value, 10);
+  if(!isNaN(n)) setDayCount(n);
+  else dayCountInputEl.value = days.length;
+});
+dayCountInputEl.addEventListener('keydown', e=>{
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    dayCountInputEl.blur();
+  }
 });
 
 function recalcPrice(){
@@ -1009,17 +1131,19 @@ function buildText(){
   lines.push('——————————');
   days.forEach((d, idx)=>{
     lines.push(`Day${idx+1}｜${d.title || '未命名'}`);
-    d.acts.filter(a=>a.trim()).forEach(a=> lines.push('　· ' + a));
+    if(d.geo) lines.push('　地理地点：' + d.geo);
+    if(d.desc) lines.push('　行程描述：' + d.desc);
   });
   lines.push('——————————');
   lines.push(`行程总价：¥${total}`);
   lines.push(`预付定金（${rate}%）：${depositTxt}`);
   lines.push(`出发前/抵达后支付尾款：${balanceTxt}`);
   const carModel = document.getElementById('carModel').value || '';
+  const seatCount = document.getElementById('seatCount').value || '7';
   const charterDays = document.getElementById('charterDays').value || '';
   lines.push('');
   lines.push('费用包含：');
-  lines.push(`1. 车辆：7座车费（油费、过路费、空返）${carModel}`);
+  lines.push(`1. 车辆：${seatCount}座车费（油费、过路费、空返）${carModel}`);
   lines.push('2. 司导/司机：一名华人司机兼向导服务，司导（小费、餐补、住宿），只提供车上简单介绍/推荐/指引/注意事项，不陪同游览');
   lines.push('3. 时长：全天包车10小时服务（正常09:00-19:00），半天包车5小时服务');
   lines.push('4. 接机/送机/单程服务：接机航班实际抵达90分钟免费等待，送机接待时间30分钟免费等待，单程服务接待时间30分钟免费等待');
@@ -1078,9 +1202,14 @@ function collectData(){
     totalPrice: document.getElementById('totalPrice').value,
     depositRate: document.getElementById('depositRate').value,
     carModel: document.getElementById('carModel').value,
+    seatCount: document.getElementById('seatCount').value,
     charterDays: document.getElementById('charterDays').value,
     notes: document.getElementById('notesText').value,
-    coverImg: coverImg
+    coverImg: coverImg,
+    tzMineLabel: document.getElementById('tzMineLabel').value,
+    tzMineZone: document.getElementById('tzMineZone').value,
+    tzDestLabel: document.getElementById('tzDestLabel').value,
+    tzDestZone: document.getElementById('tzDestZone').value
   };
 }
 
@@ -1094,7 +1223,8 @@ function applyData(data){
   document.getElementById('tripDate').value = data.tripDate || '';
   document.getElementById('totalPrice').value = data.totalPrice || '';
   document.getElementById('depositRate').value = data.depositRate || '15';
-  document.getElementById('carModel').value = data.carModel || '7座阿尔法、奔驰或同级车型';
+  document.getElementById('carModel').value = data.carModel || '阿尔法、奔驰或同级车型';
+  document.getElementById('seatCount').value = data.seatCount || '7';
   document.getElementById('charterDays').value = data.charterDays || '4';
   document.getElementById('notesText').value = data.notes || '';
   days = data.days || days;
@@ -1103,6 +1233,11 @@ function applyData(data){
   recalcPrice();
   autoresize(document.getElementById('notesText'));
   setCoverPhoto(data.coverImg || null);
+  document.getElementById('tzMineLabel').value = data.tzMineLabel || '旧金山';
+  document.getElementById('tzMineZone').value = data.tzMineZone || 'America/Los_Angeles';
+  document.getElementById('tzDestLabel').value = data.tzDestLabel || '新西兰 · 基督城';
+  document.getElementById('tzDestZone').value = data.tzDestZone || 'Pacific/Auckland';
+  updateClocks();
 }
 
 async function saveOrder(){
@@ -1154,6 +1289,77 @@ document.getElementById('linkBtn').addEventListener('click', async ()=>{
     loadOrderByCode(code);
   }
 })();
+
+const TZ_OPTIONS = [
+  {tz:'Pacific/Auckland', label:'新西兰 · 奥克兰/基督城'},
+  {tz:'Australia/Sydney', label:'澳大利亚 · 悉尼'},
+  {tz:'Asia/Tokyo', label:'日本 · 东京'},
+  {tz:'Asia/Shanghai', label:'中国 · 北京/上海'},
+  {tz:'Asia/Hong_Kong', label:'中国香港'},
+  {tz:'Asia/Singapore', label:'新加坡'},
+  {tz:'Asia/Dubai', label:'阿联酋 · 迪拜'},
+  {tz:'Europe/London', label:'英国 · 伦敦'},
+  {tz:'Europe/Paris', label:'欧洲中部 · 巴黎/柏林'},
+  {tz:'America/New_York', label:'美国东部 · 纽约'},
+  {tz:'America/Chicago', label:'美国中部 · 芝加哥'},
+  {tz:'America/Denver', label:'美国山地 · 丹佛'},
+  {tz:'America/Los_Angeles', label:'美国西部 · 旧金山/洛杉矶'},
+  {tz:'Pacific/Honolulu', label:'美国 · 夏威夷'}
+];
+
+function populateTzSelect(sel, defaultTz){
+  sel.innerHTML = TZ_OPTIONS.map(o=>`<option value="${o.tz}">${o.label}</option>`).join('');
+  sel.value = defaultTz;
+}
+populateTzSelect(document.getElementById('tzMineZone'), 'America/Los_Angeles');
+populateTzSelect(document.getElementById('tzDestZone'), 'Pacific/Auckland');
+
+function formatTimeInZone(tz){
+  try{
+    const now = new Date();
+    const time = new Intl.DateTimeFormat('zh-CN', {timeZone:tz, hour:'2-digit', minute:'2-digit', hour12:false}).format(now);
+    const date = new Intl.DateTimeFormat('zh-CN', {timeZone:tz, month:'2-digit', day:'2-digit', weekday:'short'}).format(now);
+    return {time, date};
+  }catch(e){
+    return {time:'--:--', date:''};
+  }
+}
+
+function getOffsetMinutes(tz){
+  const now = new Date();
+  try{
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone:tz, hour12:false,
+      year:'numeric', month:'2-digit', day:'2-digit',
+      hour:'2-digit', minute:'2-digit', second:'2-digit'
+    }).formatToParts(now).reduce((acc,p)=>{ acc[p.type]=p.value; return acc; }, {});
+    const asUTC = Date.UTC(parts.year, parts.month-1, parts.day, parts.hour===24?0:parts.hour, parts.minute, parts.second);
+    return Math.round((asUTC - now.getTime())/60000);
+  }catch(e){
+    return 0;
+  }
+}
+
+function updateClocks(){
+  const mineZone = document.getElementById('tzMineZone').value;
+  const destZone = document.getElementById('tzDestZone').value;
+  const mine = formatTimeInZone(mineZone);
+  const dest = formatTimeInZone(destZone);
+  document.getElementById('tzMineTime').textContent = mine.time;
+  document.getElementById('tzMineDate').textContent = mine.date;
+  document.getElementById('tzDestTime').textContent = dest.time;
+  document.getElementById('tzDestDate').textContent = dest.date;
+
+  const diffRaw = (getOffsetMinutes(destZone) - getOffsetMinutes(mineZone)) / 60;
+  const diffNum = Math.round(diffRaw * 10) / 10;
+  const sign = diffNum > 0 ? '+' : '';
+  document.getElementById('tzDiff').textContent = diffNum === 0 ? '时差 0' : `时差 ${sign}${diffNum}h`;
+}
+
+document.getElementById('tzMineZone').addEventListener('change', updateClocks);
+document.getElementById('tzDestZone').addEventListener('change', updateClocks);
+updateClocks();
+setInterval(updateClocks, 30000);
 
 renderDays();
 recalcPrice();
