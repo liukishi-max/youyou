@@ -145,6 +145,40 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   font-family:inherit;
 }
 .mini-btn.ghost{border-style:solid;border-color:rgba(228,201,138,0.3);opacity:.8;}
+
+/* ---------- ROUTE OVERVIEW MAP ---------- */
+.route-overview{
+  background:var(--navy);
+  padding:22px 24px 20px;
+  position:relative;
+  overflow:hidden;
+}
+.route-overview .ro-stars{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.route-overview .ro-head{
+  position:relative;z-index:1;
+  text-align:center;margin-bottom:6px;
+}
+.route-overview .ro-title{
+  font-family:'Fraunces',serif;font-weight:700;font-size:19px;color:#fff;
+  letter-spacing:.04em;
+}
+.route-overview .ro-sub{
+  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;
+  color:var(--gold-soft);text-transform:uppercase;margin-top:2px;
+}
+.route-overview .ro-map-wrap{
+  position:relative;z-index:1;
+  max-width:280px;margin:8px auto 0;
+}
+.route-overview .ro-map-wrap svg{display:block;width:100%;height:auto;}
+.route-overview .ro-legend{
+  position:relative;z-index:1;
+  display:flex;justify-content:center;gap:18px;
+  margin-top:10px;font-size:10.5px;color:#B9C0D4;
+}
+.route-overview .ro-legend span{display:inline-flex;align-items:center;gap:5px;}
+.route-overview .ro-legend .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);display:inline-block;}
+.route-overview .ro-legend .dot.hollow{background:transparent;border:1.5px solid var(--gold-soft);}
 .chips{
   display:flex;
   gap:10px;
@@ -234,13 +268,6 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   background:none;border:none;cursor:pointer;
   padding:4px 0 0 15px;
 }
-.day-meta{
-  display:flex;
-  gap:16px;
-  margin-top:10px;
-  font-size:12px;
-  color:var(--muted);
-}
 .day-photo-wrap{margin-top:10px;}
 .day-photo{
   position:relative;border-radius:10px;overflow:hidden;
@@ -259,8 +286,6 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   border:1.5px dashed var(--gold);border-radius:8px;
   padding:7px 12px;cursor:pointer;
 }
-.day-meta .field{display:flex;gap:5px;align-items:center;}
-.day-meta input{color:#3a3527;}
 .day-actions{
   display:flex;justify-content:flex-end;margin-top:6px;
 }
@@ -305,12 +330,63 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   display:flex;justify-content:space-between;align-items:center;
   padding:6px 0;
 }
-.pricing .label{font-size:13px;color:var(--muted);}
-.pricing .amt-wrap{display:flex;align-items:center;gap:2px;font-family:'Space Mono',monospace;font-weight:700;font-size:16px;}
-.pricing .amt-wrap input{width:90px;text-align:right;color:var(--ink);}
+.pricing .label{font-size:13px;color:var(--muted);display:flex;align-items:baseline;flex-wrap:wrap;gap:4px;}
+.pricing .amt-wrap{display:flex;align-items:center;gap:2px;font-family:'Space Mono',monospace;font-weight:700;font-size:13px;}
+.pricing .amt-wrap input{width:90px;text-align:right;color:var(--ink);font-size:13px;}
+.pricing .row-total{justify-content:flex-start;gap:10px;padding-bottom:4px;}
+.pricing .row-total .label{font-size:13px;}
+.pricing .amt-wrap.total{font-size:21px;font-weight:800;color:var(--ink);}
+.pricing .amt-wrap.total input{width:105px;text-align:left;font-size:21px;font-weight:800;}
+.pricing .sub-label{font-size:11px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px;margin-top:2px;}
 .pricing .now{color:var(--stamp);}
 .pricing .later{color:var(--navy-2);}
-.pricing .rate{font-size:11px;color:var(--muted);}
+.pricing .rate{font-size:13px;color:var(--muted);}
+
+.incl-excl{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--line);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.incl-excl .col{
+  background:var(--paper);
+  padding:16px 18px;
+}
+.incl-excl label{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:6px;
+}
+.incl-excl .incl label{color:#5c7a4f;}
+.incl-excl .excl label{color:var(--stamp);}
+.incl-excl .mark{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  font-size:10px;line-height:1;color:#fff;flex-shrink:0;
+}
+.incl-excl .incl .mark{background:#5c7a4f;}
+.incl-excl .excl .mark{background:var(--stamp);}
+.fee-list{
+  margin:0;padding-left:17px;
+  font-size:12px;color:#4a4430;line-height:1.75;
+}
+.fee-list li{margin-bottom:7px;}
+.fee-list li:last-child{margin-bottom:0;}
+.fee-list input{
+  display:inline;
+  width:auto;
+  min-width:40px;
+  border-bottom:1px dashed var(--gold);
+  padding:0 2px;
+  color:var(--ink);
+  font-weight:600;
+}
+@media (max-width:480px){
+  .incl-excl{grid-template-columns:1fr;}
+}
 
 .notes{
   padding:16px 24px 4px;
@@ -326,9 +402,10 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   border-radius:10px;
   padding:14px;
   text-align:center;
-  font-size:12.5px;
   color:#8a6a24;
 }
+.cta-main{font-size:13px;font-weight:600;line-height:1.6;}
+.cta-sub{font-size:11.5px;margin-top:6px;opacity:.8;line-height:1.6;}
 
 .foot-tools{
   display:flex;gap:10px;
@@ -442,6 +519,8 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
     <input class="tagline" id="tagline" value="雪山 · 星空 · 峡湾｜7日经典之旅">
     <div class="chips">
       <div class="chip"><span class="ic">◆</span>出行人数 <input id="pax" type="text" placeholder="4" style="width:30px"> 人</div>
+      <div class="chip"><span class="ic">◆</span>出发地 <input id="startCity" type="text" placeholder="基督城" style="width:70px"></div>
+      <div class="chip"><span class="ic">◆</span>结束地 <input id="endCity" type="text" placeholder="皇后镇" style="width:70px"></div>
       <div class="chip"><span class="ic">◆</span>行程天数 <span id="dayCountLabel">3</span> 天</div>
       <div class="chip"><span class="ic">◆</span>用车 <input id="vehicle" type="text" value="7座自驾/全程司导包车"></div>
       <div class="chip"><span class="ic">◆</span>出行日期 <input id="tripDate" type="text" placeholder="例如：12月10日-16日" style="width:130px"></div>
@@ -450,6 +529,34 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
       <label class="mini-btn" for="coverPhotoInput">🖼 上传封面图</label>
       <input type="file" id="coverPhotoInput" accept="image/*" style="display:none;">
       <button class="mini-btn ghost" id="coverPhotoRemove" style="display:none;">移除封面图</button>
+    </div>
+  </div>
+
+  <div class="route-overview">
+    <svg class="ro-stars" viewBox="0 0 380 140" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#E4C98A">
+        <circle cx="24" cy="14" r="1.2" opacity=".6"/>
+        <circle cx="70" cy="30" r=".9" opacity=".4"/>
+        <circle cx="120" cy="12" r="1.1" opacity=".55"/>
+        <circle cx="300" cy="16" r="1.2" opacity=".6"/>
+        <circle cx="350" cy="32" r=".9" opacity=".4"/>
+        <circle cx="200" cy="10" r="1" opacity=".5"/>
+      </g>
+    </svg>
+    <div class="ro-head">
+      <div class="ro-title">行程概览</div>
+      <div class="ro-sub">Itinerary Overview · South Island</div>
+    </div>
+    <div class="ro-map-wrap">
+      <svg viewBox="0 0 380 620" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 305,15 C 330,60 340,110 328,160 C 320,200 300,230 315,270 C 325,300 345,290 350,330 C 353,365 330,390 320,430 C 312,460 325,480 315,510 C 305,545 275,560 285,585 C 260,605 220,600 210,575 C 175,585 140,570 130,540 C 100,530 75,505 70,470 C 60,440 75,410 65,385 C 50,365 40,340 55,315 C 68,295 95,300 100,270 C 90,245 70,230 78,205 C 88,178 120,180 128,155 C 118,130 100,110 115,88 C 130,65 165,75 178,55 C 190,32 230,15 260,10 C 275,8 292,5 305,15 Z"
+          fill="rgba(228,201,138,0.06)" stroke="rgba(228,201,138,0.45)" stroke-width="2"/>
+        <g id="roDynamic"></g>
+      </svg>
+    </div>
+    <div class="ro-legend">
+      <span><span class="dot"></span>住宿点（含天数）</span>
+      <span><span class="dot hollow"></span>途经 / 打卡点</span>
     </div>
   </div>
 
@@ -462,10 +569,11 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
   </svg>
 
   <div class="pricing">
-    <div class="row">
+    <div class="row row-total">
       <div class="label">行程总价</div>
-      <div class="amt-wrap">¥<input id="totalPrice" type="text" value="12800"></div>
+      <div class="amt-wrap total"><span>¥</span><input id="totalPrice" type="text" value="12800"></div>
     </div>
+    <div class="sub-label">分批次付款：</div>
     <div class="row">
       <div class="label">预付定金<div class="rate">（比例 <input id="depositRate" type="text" value="30" style="width:24px;display:inline;">%）</div></div>
       <div class="amt-wrap now" id="depositAmt">¥3840</div>
@@ -476,12 +584,37 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
     </div>
   </div>
 
+  <div class="incl-excl">
+    <div class="col incl">
+      <label><span class="mark">✓</span>费用包含</label>
+      <ol class="fee-list">
+        <li>车辆：7座车费（油费、过路费、空返）<input id="carModel" type="text" value="7座阿尔法、奔驰或同级车型"></li>
+        <li>司导/司机：一名华人司机兼向导服务，司导（小费、餐补、住宿），只提供车上简单介绍/推荐/指引/注意事项，不陪同游览</li>
+        <li>时长：全天包车10小时服务（正常09:00-19:00），半天包车5小时服务</li>
+        <li>接机/送机/单程服务：接机航班实际抵达90分钟免费等待，送机接待时间30分钟免费等待，单程服务接待时间30分钟免费等待</li>
+        <li>服务：<input id="charterDays" type="text" value="4" style="width:26px;text-align:center;">天全天包车</li>
+      </ol>
+    </div>
+    <div class="col excl">
+      <label><span class="mark">✕</span>费用不含</label>
+      <ol class="fee-list">
+        <li>出行人个人消费（餐饮、住宿、门票）</li>
+        <li>当天包车超时：当天按 $50（当地币种）/小时现付司导（当天服务当天结算，超30分钟不足1小时按1小时计算）</li>
+        <li>境外旅游保险（如中国出境强烈建议出境前在国内购买出境游保险，如第三国家出境则在当地国家购买）。中国出境旅游保险可代订，根据险种旅游保险额度单独付费，如不需则默认为客户自行购买</li>
+        <li>费用包含未提及费用</li>
+      </ol>
+    </div>
+  </div>
+
   <div class="notes">
     <label>温馨提示</label>
     <textarea id="notesText" placeholder="例如：以上行程可根据天气及个人喜好微调；建议携带轻便衣物及防晒用品。">南岛昼夜温差大，建议携带冲锋衣/抓绒等分层衣物；自驾需持国际驾照翻译认证件；峡湾游船、缆车等热门项目建议提前预约；具体行程可根据天气及路况微调。</textarea>
   </div>
 
-  <div class="cta">请确认以上行程与报价，回复"确认"后为您发送定金付款链接</div>
+  <div class="cta">
+    <div class="cta-main">请确认以上行程与报价，回复"确认"后为您发送定金付款链接。</div>
+    <div class="cta-sub">预付定金即为您预留车辆，提前7天安排司导，并为您建立出行服务群哦，预祝旅途愉快！</div>
+  </div>
 
   <div class="foot-tools">
     <button class="foot-btn ghost" id="copyBtn">复制文字版</button>
@@ -496,25 +629,23 @@ textarea{resize:none;overflow:hidden;line-height:1.5;}
 let dayCounter = 0;
 let days = [];
 
-function newDay(title, acts, meal, note, img){
+function newDay(title, acts, img){
   dayCounter++;
   return {
     id: dayCounter,
     title: title || '',
     acts: acts || [''],
-    meal: meal || '',
-    note: note || '',
     img: img || null
   };
 }
 
-days.push(newDay('抵达基督城 · 花园城市漫步', ['接机，入住酒店', '雅芳河畔漫步 / 撑篙体验', '大教堂广场、植物园自由活动'], '不含餐', '接机服务'));
-days.push(newDay('基督城 → 蒂卡波湖', ['沿坎特伯雷平原一路南下', '打卡网红「牧羊人教堂」', '夜观南半球星空（蒂卡波为国际暗夜保护区）'], '含早餐', '全程包车'));
-days.push(newDay('蒂卡波 → 库克山 → 皇后镇', ['库克山国家公园徒步观景（胡克山谷步道）', '远眺新西兰最高峰', '傍晚抵达皇后镇，入住湖畔酒店'], '含早餐', ''));
-days.push(newDay('皇后镇自由活动日', ['天空缆车 + 卢奇滑板车', '瓦卡蒂普湖蒸汽船茶叙庄园', '可选加购：蹦极 / 跳伞 / 喷射快艇'], '含早餐', '极限项目需提前预约'));
-days.push(newDay('米尔福德峡湾一日游', ['清晨出发，途经镜湖、荷马隧道', '峡湾游船巡游（观瀑布、海豹、海豚）', '傍晚返回皇后镇'], '含早餐+午餐', '全程约11小时'));
-days.push(newDay('皇后镇 → 但尼丁', ['途经中奥塔哥酒庄，可安排品酒', '抵达但尼丁，探访皇家信天翁保护区', '有机会偶遇黄眼企鹅'], '含早餐', ''));
-days.push(newDay('但尼丁 → 摩拉基大圆石 → 基督城', ['沿海岸线打卡摩拉基大圆石', '返回基督城，送机', '结束愉快的南岛之旅'], '含早餐', '送机服务'));
+days.push(newDay('抵达基督城 · 花园城市漫步', ['接机，入住酒店', '雅芳河畔漫步 / 撑篙体验', '大教堂广场、植物园自由活动']));
+days.push(newDay('基督城 → 蒂卡波湖', ['沿坎特伯雷平原一路南下', '打卡网红「牧羊人教堂」', '夜观南半球星空（蒂卡波为国际暗夜保护区）']));
+days.push(newDay('蒂卡波 → 库克山 → 皇后镇', ['库克山国家公园徒步观景（胡克山谷步道）', '远眺新西兰最高峰', '傍晚抵达皇后镇，入住湖畔酒店']));
+days.push(newDay('皇后镇自由活动日', ['天空缆车 + 卢奇滑板车', '瓦卡蒂普湖蒸汽船茶叙庄园', '可选加购：蹦极 / 跳伞 / 喷射快艇']));
+days.push(newDay('米尔福德峡湾一日游', ['清晨出发，途经镜湖、荷马隧道', '峡湾游船巡游（观瀑布、海豹、海豚）', '傍晚返回皇后镇']));
+days.push(newDay('皇后镇 → 但尼丁', ['途经中奥塔哥酒庄，可安排品酒', '抵达但尼丁，探访皇家信天翁保护区', '有机会偶遇黄眼企鹅']));
+days.push(newDay('但尼丁 → 摩拉基大圆石 → 基督城', ['沿海岸线打卡摩拉基大圆石', '返回基督城，送机', '结束愉快的南岛之旅']));
 
 function dayIcon(title){
   const t = title || '';
@@ -613,6 +744,146 @@ function autoresize(ta){
   ta.style.height = ta.scrollHeight + 'px';
 }
 
+const PLACES = {
+  '基督城': {x:300, y:300, label:'基督城'},
+  '蒂卡波': {x:230, y:340, label:'蒂卡波'},
+  '库克山': {x:190, y:300, label:'库克山'},
+  '瓦纳卡': {x:170, y:420, label:'瓦纳卡'},
+  '皇后镇': {x:150, y:460, label:'皇后镇'},
+  '蒂阿瑙': {x:110, y:500, label:'蒂阿瑙'},
+  '米尔福德': {x:85, y:430, label:'米尔福德峡湾'},
+  '但尼丁': {x:250, y:540, label:'但尼丁'},
+  '奥玛鲁': {x:280, y:500, label:'奥玛鲁'},
+  '摩拉基': {x:290, y:460, label:'摩拉基大圆石'},
+  '凯库拉': {x:335, y:150, label:'凯库拉'},
+  '尼尔森': {x:180, y:80, label:'尼尔森'},
+  '皮克顿': {x:290, y:60, label:'皮克顿'},
+  '格雷茅斯': {x:90, y:250, label:'格雷茅斯'},
+  '弗朗兹约瑟夫': {x:75, y:300, label:'弗朗兹约瑟夫冰川'},
+  '福克斯冰川': {x:70, y:320, label:'福克斯冰川'}
+};
+
+function extractPlaces(title){
+  const t = title || '';
+  const found = [];
+  Object.keys(PLACES).forEach(key=>{
+    const idx = t.indexOf(key);
+    if(idx !== -1) found.push({key, idx});
+  });
+  found.sort((a,b)=>a.idx-b.idx);
+  const seen = new Set();
+  return found.filter(f=>{
+    if(seen.has(f.key)) return false;
+    seen.add(f.key);
+    return true;
+  }).map(f=>f.key);
+}
+
+function computeDayPlaces(){
+  const raw = days.map(d => extractPlaces(d.title));
+  const n = days.length;
+  const effStop = new Array(n).fill(null);
+  const dayWaypoints = new Array(n).fill(null).map(()=>[]);
+  let currentBase = null;
+
+  for(let i=0;i<n;i++){
+    const m = raw[i];
+    if(m.length === 0){
+      effStop[i] = currentBase;
+      continue;
+    }
+    if(m.length === 1){
+      const candidate = m[0];
+      if(candidate === currentBase || currentBase === null){
+        effStop[i] = candidate;
+        currentBase = candidate;
+        continue;
+      }
+      const nextRaw = i+1 < n ? raw[i+1] : [];
+      const returnsToBase = nextRaw.includes(currentBase);
+      if(returnsToBase){
+        dayWaypoints[i] = [candidate];
+        effStop[i] = currentBase;
+      } else {
+        effStop[i] = candidate;
+        currentBase = candidate;
+      }
+      continue;
+    }
+    dayWaypoints[i] = m.slice(0,-1);
+    effStop[i] = m[m.length-1];
+    currentBase = effStop[i];
+  }
+  return {effStop, dayWaypoints};
+}
+
+function renderRouteMap(){
+  const g = document.getElementById('roDynamic');
+  if(!g) return;
+  g.innerHTML = '';
+
+  const {effStop, dayWaypoints} = computeDayPlaces();
+  const pathPts = [];
+  const pushPt = p=>{
+    const last = pathPts[pathPts.length-1];
+    if(!last || last.x !== p.x || last.y !== p.y) pathPts.push(p);
+  };
+  const stops = [];
+  const waypointKeys = new Set();
+
+  days.forEach((d, idx)=>{
+    (dayWaypoints[idx]||[]).forEach(k=>{ waypointKeys.add(k); pushPt(PLACES[k]); });
+    if(effStop[idx]){ pushPt(PLACES[effStop[idx]]); stops.push({dayNum: idx+1, key: effStop[idx]}); }
+  });
+
+  if(stops.length === 0) return;
+
+  const markers = [];
+  stops.forEach(s=>{
+    const last = markers[markers.length-1];
+    if(last && last.key === s.key){ last.days.push(s.dayNum); }
+    else markers.push({key:s.key, days:[s.dayNum]});
+  });
+  const stopKeys = new Set(markers.map(m=>m.key));
+  const byPlace = {};
+  markers.forEach(m=>{
+    const label = m.days.length>1 ? `${m.days[0]}-${m.days[m.days.length-1]}` : `${m.days[0]}`;
+    if(!byPlace[m.key]) byPlace[m.key] = [];
+    byPlace[m.key].push(label);
+  });
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, text)=>{
+    const el = document.createElementNS(ns, tag);
+    Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+    if(text != null) el.textContent = text;
+    return el;
+  };
+
+  if(pathPts.length > 1){
+    const d = 'M' + pathPts.map(p=>`${p.x},${p.y}`).join(' L');
+    g.appendChild(mk('path', {d, fill:'none', stroke:'#E4C98A', 'stroke-width':'2', 'stroke-dasharray':'1,7', 'stroke-linecap':'round'}));
+  }
+
+  waypointKeys.forEach(key=>{
+    if(stopKeys.has(key)) return;
+    const p = PLACES[key];
+    g.appendChild(mk('circle', {cx:p.x, cy:p.y, r:4, fill:'none', stroke:'#E4C98A', 'stroke-width':'1.5'}));
+    g.appendChild(mk('text', {x:p.x, y:p.y-10, 'text-anchor':'middle', 'font-size':'12', fill:'#B9C0D4', 'font-family':'Inter,sans-serif'}, p.label));
+  });
+
+  Object.keys(byPlace).forEach(key=>{
+    const p = PLACES[key];
+    const labelText = byPlace[key].join('·');
+    const isLeft = p.x > 190;
+    const grp = mk('g', {});
+    grp.appendChild(mk('circle', {cx:p.x, cy:p.y, r:11, fill:'#B98D3E', stroke:'#F6F1E4', 'stroke-width':'1.5'}));
+    grp.appendChild(mk('text', {x:p.x, y:p.y+4, 'text-anchor':'middle', 'font-size':labelText.length>2?'9':'11', 'font-weight':'700', fill:'#16233F', 'font-family':"'Space Mono',monospace"}, labelText));
+    grp.appendChild(mk('text', {x:p.x + (isLeft?-16:16), y:p.y+4, 'text-anchor':isLeft?'end':'start', 'font-size':'13', 'font-weight':'600', fill:'#fff', 'font-family':'Inter,sans-serif'}, p.label));
+    g.appendChild(grp);
+  });
+}
+
 function renderDays(){
   const c = document.getElementById('days');
   c.innerHTML = '';
@@ -632,10 +903,6 @@ function renderDays(){
         <div class="activities" data-acts-for="${d.id}"></div>
         <button class="add-act" data-id="${d.id}">+ 添加一项活动</button>
         <div class="day-photo-wrap" data-day="${d.id}"></div>
-        <div class="day-meta">
-          <div class="field">🍽 <input data-id="${d.id}" data-field="meal" value="${d.meal}" placeholder="餐食安排"></div>
-          <div class="field">🚐 <input data-id="${d.id}" data-field="note" value="${d.note}" placeholder="当日用车/备注"></div>
-        </div>
         <div class="day-actions"><button class="rm-day" data-id="${d.id}">删除这一天</button></div>
       </div>
     `;
@@ -645,6 +912,7 @@ function renderDays(){
   });
   document.getElementById('dayCountLabel').textContent = days.length;
   bindDayEvents();
+  renderRouteMap();
 }
 
 function renderActs(d){
@@ -676,13 +944,14 @@ function renderActs(d){
 }
 
 function bindDayEvents(){
-  document.querySelectorAll('.day-title, .day-meta input').forEach(inp=>{
+  document.querySelectorAll('.day-title').forEach(inp=>{
     inp.addEventListener('input', e=>{
       const day = days.find(x=>x.id==e.target.dataset.id);
       day[e.target.dataset.field] = e.target.value;
       if(e.target.classList.contains('day-title')){
         const icon = e.target.closest('.day-title-row').querySelector('.day-icon');
         if(icon) icon.textContent = dayIcon(e.target.value);
+        renderRouteMap();
       }
     });
   });
@@ -702,7 +971,7 @@ function bindDayEvents(){
 }
 
 document.getElementById('addDay').addEventListener('click', ()=>{
-  days.push(newDay('', [''], '', ''));
+  days.push(newDay('', ['']));
   renderDays();
 });
 
@@ -723,6 +992,8 @@ function buildText(){
   const dest = document.getElementById('dest').value || '目的地';
   const tagline = document.getElementById('tagline').value || '';
   const pax = document.getElementById('pax').value || '--';
+  const startCity = document.getElementById('startCity').value || '';
+  const endCity = document.getElementById('endCity').value || '';
   const vehicle = document.getElementById('vehicle').value || '--';
   const tripDate = document.getElementById('tripDate').value || '待定';
   const total = document.getElementById('totalPrice').value || '0';
@@ -734,21 +1005,36 @@ function buildText(){
   lines.push(`【定制行程方案】${dest}`);
   if(tagline) lines.push(tagline);
   lines.push(`出行日期：${tripDate}　人数：${pax}人　用车：${vehicle}`);
+  if(startCity || endCity) lines.push(`出发地：${startCity || '待定'}　结束地：${endCity || '待定'}`);
   lines.push('——————————');
   days.forEach((d, idx)=>{
     lines.push(`Day${idx+1}｜${d.title || '未命名'}`);
     d.acts.filter(a=>a.trim()).forEach(a=> lines.push('　· ' + a));
-    if(d.meal) lines.push('　餐食：' + d.meal);
-    if(d.note) lines.push('　用车/备注：' + d.note);
   });
   lines.push('——————————');
   lines.push(`行程总价：¥${total}`);
   lines.push(`预付定金（${rate}%）：${depositTxt}`);
   lines.push(`出发前/抵达后支付尾款：${balanceTxt}`);
+  const carModel = document.getElementById('carModel').value || '';
+  const charterDays = document.getElementById('charterDays').value || '';
+  lines.push('');
+  lines.push('费用包含：');
+  lines.push(`1. 车辆：7座车费（油费、过路费、空返）${carModel}`);
+  lines.push('2. 司导/司机：一名华人司机兼向导服务，司导（小费、餐补、住宿），只提供车上简单介绍/推荐/指引/注意事项，不陪同游览');
+  lines.push('3. 时长：全天包车10小时服务（正常09:00-19:00），半天包车5小时服务');
+  lines.push('4. 接机/送机/单程服务：接机航班实际抵达90分钟免费等待，送机接待时间30分钟免费等待，单程服务接待时间30分钟免费等待');
+  lines.push(`5. 服务：${charterDays}天全天包车`);
+  lines.push('');
+  lines.push('费用不含：');
+  lines.push('1. 出行人个人消费（餐饮、住宿、门票）');
+  lines.push('2. 当天包车超时：当天按 $50（当地币种）/小时现付司导（当天服务当天结算，超30分钟不足1小时按1小时计算）');
+  lines.push('3. 境外旅游保险（如中国出境强烈建议出境前在国内购买出境游保险，如第三国家出境则在当地国家购买）。中国出境旅游保险可代订，根据险种旅游保险额度单独付费，如不需则默认为客户自行购买');
+  lines.push('4. 费用包含未提及费用');
   const notes = document.getElementById('notesText').value;
   if(notes) { lines.push(''); lines.push('温馨提示：' + notes); }
   lines.push('');
   lines.push('请确认以上行程与报价，回复"确认"后为您发送定金付款链接。');
+  lines.push('预付定金即为您预留车辆，提前7天安排司导，并为您建立出行服务群哦，预祝旅途愉快！');
   return lines.join('\n');
 }
 
@@ -784,11 +1070,15 @@ function collectData(){
     dest: document.getElementById('dest').value,
     tagline: document.getElementById('tagline').value,
     pax: document.getElementById('pax').value,
+    startCity: document.getElementById('startCity').value,
+    endCity: document.getElementById('endCity').value,
     vehicle: document.getElementById('vehicle').value,
     tripDate: document.getElementById('tripDate').value,
     days: days,
     totalPrice: document.getElementById('totalPrice').value,
     depositRate: document.getElementById('depositRate').value,
+    carModel: document.getElementById('carModel').value,
+    charterDays: document.getElementById('charterDays').value,
     notes: document.getElementById('notesText').value,
     coverImg: coverImg
   };
@@ -798,10 +1088,14 @@ function applyData(data){
   document.getElementById('dest').value = data.dest || '';
   document.getElementById('tagline').value = data.tagline || '';
   document.getElementById('pax').value = data.pax || '';
+  document.getElementById('startCity').value = data.startCity || '';
+  document.getElementById('endCity').value = data.endCity || '';
   document.getElementById('vehicle').value = data.vehicle || '';
   document.getElementById('tripDate').value = data.tripDate || '';
   document.getElementById('totalPrice').value = data.totalPrice || '';
   document.getElementById('depositRate').value = data.depositRate || '15';
+  document.getElementById('carModel').value = data.carModel || '7座阿尔法、奔驰或同级车型';
+  document.getElementById('charterDays').value = data.charterDays || '4';
   document.getElementById('notesText').value = data.notes || '';
   days = data.days || days;
   dayCounter = days.reduce((m,d)=>Math.max(m,d.id),0);
